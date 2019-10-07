@@ -5,19 +5,9 @@ const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
+const connect = require('./utils/mg-connect')
 
-const blogSchema = mongoose.Schema({
-  title: String,
-  author: String,
-  url: String,
-  likes: Number,
-})
-
-const Blog = mongoose.model('Blog', blogSchema)
-
-const mongoUrl = 'mongodb+srv://jacobinmt47:02RedK9s@cluster0-cekgn.mongodb.net/test?retryWrites=true&w=majority'
-mongoose.set('useFindAndModify', false)
-mongoose.connect(mongoUrl, { useUnifiedTopology: true,useNewUrlParser: true })
+const Blog = mongoose.model('Blog', connect.blogSchema)
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -40,7 +30,7 @@ app.post('/api/blogs', (request, response) => {
     })
 })
 
-const PORT = 3003
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+
+app.listen(connect.PORT, () => {
+  console.log(`Server running on port ${connect.PORT}`)
 })
