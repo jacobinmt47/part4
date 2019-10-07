@@ -9,13 +9,14 @@ const blogSchema = mongoose.Schema({
   title: String,
   author: String,
   url: String,
-  likes: Number
+  likes: Number,
 })
 
 const Blog = mongoose.model('Blog', blogSchema)
 
-const mongoUrl = 'mongodb://localhost/bloglist'
-mongoose.connect(mongoUrl, { useNewUrlParser: true })
+const mongoUrl = 'mongodb+srv://jacobinmt47:02RedK9s@cluster0-cekgn.mongodb.net/test?retryWrites=true&w=majority'
+mongoose.set('useFindAndModify', false)
+mongoose.connect(mongoUrl, { useUnifiedTopology: true,useNewUrlParser: true })
 
 app.use(cors())
 app.use(bodyParser.json())
