@@ -3,30 +3,21 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
+// const Blog = require('./models/blog')
 const mongoose = require('mongoose')
+
 const connect = require('./utils/mg-connect')
+const blogRouter = require('./controller/blog')
+const middleware = require('./utils/middleware')
 
-const Blog = mongoose.model('Blog', connect.blogSchema)
-
+mongoose.set('useFindAndModify', false)
+mongoose.connect(connect.mongoUrl, { useUnifiedTopology: true, useNewUrlParser: true })
+  .then(() => { console.log('connected') })
+  .catch(error => { console.log(error) })
 app.use(cors())
 app.use(bodyParser.json())
+app.use('/api/blogs', blogRouter)
+app.use(middleware)
 
-app.get('/api/blogs', (request, response) => {
-  Blog
-    .find({})
-    .then(blogs => {
-      response.json(blogs)
-    })
-})
-
-app.post('/api/blogs', (request, response) => {
-  const blog = new Blog(request.body)
-
-  blog
-    .save()
-    .then(result => {
-      response.status(201).json(result)
-    })
-})
-
+console.log('just before export')
 module.export = app
