@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "watch": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --verbose",
     "deploy": "git push heroku master",
     "logs:prod": "heroku logs --tail"
   },
@@ -30,6 +30,11 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react-hooks": "^2.1.2",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.3"
+  },
+  "jest":{
+    "testEnvironment": "node"
   }
 }
+
