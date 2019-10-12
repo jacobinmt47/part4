@@ -1,23 +1,32 @@
+const mongoose = require('mongoose')
 const express = require('express')
+const bodyParser = require('body-parser')
 
 const app = express()
-const bodyParser = require('body-parser')
 const cors = require('cors')
-// const Blog = require('./models/blog')
-const mongoose = require('mongoose')
-
-const connect = require('./utils/mg-connect')
-const blogRouter = require('./controller/blog')
+const blogsRouter = require('./controller/blogs')
 const middleware = require('./utils/middleware')
+const config = require('./utils/config')
 
-mongoose.set('useFindAndModify', false)
-mongoose.connect(connect.mongoUrl, { useUnifiedTopology: true, useNewUrlParser: true })
-  .then(() => { console.log('connected') })
-  .catch(error => { console.log(error) })
+
+console.log('connecting to', config.MONGODB_URI)
+
+mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true })
+  .then(() => {
+    console.log('connected to MongoDB')
+  })
+  .catch((error) => {
+    console.log('error connection to MongoDB:', error.message)
+  })
+
 app.use(cors())
+app.use(express.static('build'))
 app.use(bodyParser.json())
-app.use('/api/blogs', blogRouter)
-app.use(middleware)
+app.use(middleware.requestLogger)
 
-console.log('just before export')
-module.export = app
+app.use('/api/blogs', blogsRouter)
+
+app.use(middleware.unknownEndpoint)
+app.use(middleware.errorHandler)
+
+module.exports = app

@@ -1,6 +1,6 @@
 const http = require('http')
 const app = require('./app')
-const connect = require('./utils/mg-connect')
+const connect = require('./utils/config')
 
 const server = http.createServer(app)
 
