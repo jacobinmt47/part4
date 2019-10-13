@@ -1,9 +1,7 @@
 const dummy = (blogs) => 1
 const gummy = () => 2
 const totalLikes = (blogs) => {
-  const reducer = (sum, item) => {
-    return sum + item.likes
-  }
+  const reducer = (sum, item) => sum + item.likes
   return blogs.length === 0
     ? 0
     : blogs.reduce(reducer, 0)
@@ -18,7 +16,13 @@ const favoriteBlog = (blogs) => {
       indexMax = i
     }
   }
-  return blogs[indexMax]
+  const b = {
+    title: blogs[indexMax].title,
+    author: blogs[indexMax].author,
+    likes: blogs[indexMax].likes,
+  }
+  return b
 }
-module.exports = { dummy, gummy, totalLikes, favoriteBlog,
+module.exports = {
+  dummy, gummy, totalLikes, favoriteBlog,
 }
