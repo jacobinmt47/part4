@@ -54,7 +54,6 @@ const blogs = [
 
 test('dummy returns one', () => {
   const blogs2 = []
-  console.log(listHelper.dummy)
   const result = listHelper.dummy(blogs2)
   expect(result).toBe(1)
 })
@@ -104,7 +103,7 @@ describe('max likes', () => {
     const result = listHelper.mostLikes(blogs)
     expect(result).toEqual({
       author: 'Edsger W. Dijkstra',
-      blogs: 17,
+      likes: 17,
     })
   })
 })

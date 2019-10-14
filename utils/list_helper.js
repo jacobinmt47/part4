@@ -42,17 +42,16 @@ const mostLikes = (blogs) => {
   let maxLike = 0
   let maxAuthor = ''
   const authors = lodash.uniqBy(blogs, 'author')
-  for (let i = 0; i < lodash(authors); i += 1) {
-    const a = lodash.filter(blogs, authors[i])
+  for (let i = 0; i < lodash.size(authors); i += 1) {
+    const a = lodash.filter(blogs, { author: authors[i].author })
     const l = lodash.sumBy(a, 'likes')
-    console.log(a, '  ', l)
     if (l > maxLike) {
       maxLike = l
-      maxAuthor = a
+      maxAuthor = authors[i].author
     }
-    return { author: maxAuthor, likes: maxLike }
   }
-
+  const ml = { author: maxAuthor, likes: maxLike }
+  return ml
 }
 
 module.exports = {
