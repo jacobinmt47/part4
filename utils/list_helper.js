@@ -1,3 +1,5 @@
+const lodash = require('lodash')
+
 const dummy = (blogs) => 1
 const gummy = () => 2
 const totalLikes = (blogs) => {
@@ -25,10 +27,32 @@ const favoriteBlog = (blogs) => {
 }
 const mostBlogs = (blogs) => {
 // return author and number of blogs
+  const a = lodash.countBy(blogs, 'author')
+  const size = lodash.size(a)
+  const p = lodash.toPairs(a)
+  const mb = { // should i sort this first
+    author: p[size - 1][0],
+    blogs: p[size - 1][1],
+  }
+  return mb
 }
 
 const mostLikes = (blogs) => {
 // return author and number of likes for the most liked
+  let maxLike = 0
+  let maxAuthor = ''
+  const authors = lodash.uniqBy(blogs, 'author')
+  for (let i = 0; i < lodash(authors); i += 1) {
+    const a = lodash.filter(blogs, authors[i])
+    const l = lodash.sumBy(a, 'likes')
+    console.log(a, '  ', l)
+    if (l > maxLike) {
+      maxLike = l
+      maxAuthor = a
+    }
+    return { author: maxAuthor, likes: maxLike }
+  }
+
 }
 
 module.exports = {
