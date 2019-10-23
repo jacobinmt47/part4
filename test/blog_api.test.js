@@ -26,3 +26,9 @@ test('number of blogs', async () => {
   const response = await api.get('/api/blogs')
   expect(response.body.length).toBe(6)
 })
+
+test('id is defined', async () => {
+  console.log('called from id')
+  const response = await api.get('/api/blogs')
+  expect(response.body[0].id).toBeDefined()
+})

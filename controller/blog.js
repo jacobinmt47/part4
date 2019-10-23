@@ -18,7 +18,7 @@ blogRouter.get('/', async (request, response) =>{
   }
 })
 
-blogRouter.post('/', (request, response, next) => {
+blogRouter.post('/', async (request, response, next) => {
   console.log('called on post')
   const { body } = request
   const blog = new Blog({
@@ -27,9 +27,13 @@ blogRouter.post('/', (request, response, next) => {
     url: body.url,
     likes: body.likes,
   })
-  blog.save()
-    .then(b => { response.json(b.toJSON())})
-    .catch(error => { next(error) })
+  try {
+    const b = await blog.save()
+    response.json(b)
+  } catch (error) {
+    console.log(`called from post error ${error}`)
+    next(error)
+  }
 })
 
 module.exports = blogRouter
