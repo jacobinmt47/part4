@@ -7,9 +7,11 @@ const blogHelper = require('./blog_helper')
 const api = supertest(app)
 
 beforeEach(async () => {
-  Blog.deleteMany({})
+  console.log('before delete many')
+  await Blog.deleteMany({})
   // eslint-disable-next-line no-restricted-syntax
   for (const b of blogHelper) {
+  // console.log(b)
     const blogObject = new Blog(b)
     blogObject.save()
   }
@@ -20,7 +22,7 @@ afterAll(() => {
 })
 
 test('number of blogs', async () => {
+  console.log('call for number of blogs')
   const response = await api.get('/api/blogs')
-  console.log(response.body.length)
-  expect(response.body.length === 5)
+  expect(response.body.length).toBe(6)
 })

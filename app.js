@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 
 const app = express()
 const cors = require('cors')
-const blogsRouter = require('./controller/blogs')
+const blogsRouter = require('./controller/blog')
 const middleware = require('./utils/middleware')
 const config = require('./utils/config')
 
