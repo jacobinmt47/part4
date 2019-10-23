@@ -8,6 +8,7 @@ blogRouter.get('/', async (request, response) =>{
     console.log('blg is found')
     if (blg) {
       console.log(`called on blg ${blg}`)
+      
       response.json(blg)
     } else {
       console.log('called from error')
@@ -26,7 +27,6 @@ blogRouter.post('/', async (request, response, next) => {
     author: body.author,
     url: body.url,
     likes: body.likes,
-    id: body._id,
   })
   try {
     const b = await blog.save()
