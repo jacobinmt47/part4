@@ -53,7 +53,7 @@ const mostLikes = (blogs) => {
   const ml = { author: maxAuthor, likes: maxLike }
   return ml
 }
-const blogCount = (blogs) => {}
+const blogCount = (blogs) => blogs.length
 
 module.exports = {
   dummy, gummy, totalLikes, favoriteBlog, mostBlogs, mostLikes, blogCount,

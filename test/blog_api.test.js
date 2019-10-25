@@ -45,7 +45,7 @@ describe('blog api tests', () => {
     try {
       console.log('called from id')
       const response = await api.get('/api/blogs')
-      expect(response.body.length).toBeDefined()
+      expect(response.body[0].id).toBeDefined()
     } catch (error) {
       console.log('error from defined')
     }
