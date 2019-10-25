@@ -33,10 +33,12 @@ blogRouter.post('/', async (request, response, next) => {
   if (blog.title === undefined || blog.title === '') {
     console.log('error title is blank')
     response.status(400).end()
+    return 400
   }
   if (blog.url === undefined || blog.url === '') {
     console.log('error url is blank')
     response.status(400).end()
+    return 400
   }
   try {
     const b = await blog.save()
@@ -45,6 +47,7 @@ blogRouter.post('/', async (request, response, next) => {
     console.log(`called from post error ${error}`)
     next(error)
   }
+  return 0
 })
 
 module.exports = blogRouter

@@ -68,17 +68,26 @@ describe('blog api tests', () => {
       const j1 = response.body[blogHelper.length]
       console.log(j1)
       expect(j1.likes).toBe(0)
-
-      })
-      
     } catch (error) {
       console.log(`error from add blog ${error}`)
     }
   })
-  test('missing title', async () =>{
+  test('missing title', async () => {
+    jest.setTimeout(60000)
     const badBlog = new Blog({
       author: 'jacob lageschulte',
       likes: 0,
+      url: 'http:/localhost',
+    })
+    await api.post('/api/blogs').send(badBlog).expect(400)
   })
-  await api.post('/api/blogs').expect(400)
+  test('missing url', async () => {
+    jest.setTimeout(60000)
+    const badBlog = new Blog({
+      title: 'bad Blog',
+      author: 'jacob lageschulte',
+      likes: 0,
+    })
+    await api.post('/api/blogs').send(badBlog).expect(400)
+  })
 })
