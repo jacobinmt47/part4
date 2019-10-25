@@ -7,7 +7,7 @@ blogRouter.get('/', async (request, response) => {
     const blg = await Blog.find({})
     console.log(blg)
     if (blg) {
-      console.log(`called on blg ${blg}`)   
+      console.log(`called on blg ${blg}`)
       response.json(blg.map(bl => bl.toJSON()))
     } else {
       console.log('called from error')
@@ -27,6 +27,9 @@ blogRouter.post('/', async (request, response, next) => {
     url: body.url,
     likes: body.likes,
   })
+  if (blog.likes === undefined) {
+    blog.likes = 0
+  }
   try {
     const b = await blog.save()
     response.json(b)

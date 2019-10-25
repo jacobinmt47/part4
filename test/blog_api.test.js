@@ -57,13 +57,17 @@ describe('blog api tests', () => {
         title: 'this is a new blog',
         author: 'jacob lageschulte',
         url: 'http://localhost',
-        likes: 0,
       })
       await api.post('/api/blogs').send(blog)
       console.log('called after post -- add blog')
       const response = await api.get('/api/blogs')
       expect(response.body.length).toBe(blogHelper.length + 1)
-
+      const urls = response.body.map(b => b.url)
+      expect(urls).toContain('http://localhost')
+      // might be problem assumes that  new blog will be at end of collection
+      const j1 = response.body[blogHelper.length] 
+      console.log(j1)
+      expect(j1.likes).toBe(0)
     } catch (error) {
       console.log(`error from add blog ${error}`)
     }
