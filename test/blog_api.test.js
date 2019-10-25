@@ -7,7 +7,7 @@ const blogHelper = require('./blog_helper')
 const api = supertest(app)
 
 describe('blog api tests', () => {
-  beforeEach(async (done) => {
+  beforeEach(async () => {
     console.log('before delete many')
     await Blog.deleteMany({})
     console.log('after delete many')
@@ -15,7 +15,6 @@ describe('blog api tests', () => {
     const promisearray = blg.map(b => b.save())
     await Promise.all(promisearray)
     console.log('after promise all')
-    done()
   })
 
   afterAll(() => {
@@ -27,7 +26,7 @@ describe('blog api tests', () => {
     try {
       console.log('call for number of blogs')
       const response = await api.get('/api/blogs')
-      expect(response.body.length).toBe(6)
+      expect(response.body.length).toBe(blogHelper.length)
     } catch (error) {
       console.log(`called from test number of blogs ${error}`)
     }
