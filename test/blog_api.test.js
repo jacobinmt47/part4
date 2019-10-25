@@ -6,29 +6,41 @@ const blogHelper = require('./blog_helper')
 
 const api = supertest(app)
 
-beforeEach(async () => {
-  console.log('before delete many')
-  await Blog.deleteMany({})
-  // eslint-disable-next-line no-restricted-syntax
-  for (const b of blogHelper) {
-  // console.log(b)
-    const blogObject = new Blog(b)
-    blogObject.save()
-  }
-})
+describe('blog api tests', () => {
+  beforeEach(async (done) => {
+    console.log('before delete many')
+    await Blog.deleteMany({})
+    console.log('after delete many')
+    const blg = blogHelper.map(blog => new Blog(blog))
+    const promisearray = blg.map(b => b.save())
+    await Promise.all(promisearray)
+    console.log('after promise all')
+    done()
+  })
 
-afterAll(() => {
-  mongoose.connection.close()
-})
+  afterAll(() => {
+    mongoose.connection.close()
+  })
 
-test('number of blogs', async () => {
-  console.log('call for number of blogs')
-  const response = await api.get('/api/blogs')
-  expect(response.body.length).toBe(6)
-})
+  test('number of blogs', async () => {
+    jest.setTimeout(60000)
+    try {
+      console.log('call for number of blogs')
+      const response = await api.get('/api/blogs')
+      expect(response.body.length).toBe(6)
+    } catch (error) {
+      console.log(`called from test number of blogs ${error}`)
+    }
+  })
 
-test('id is defined', async () => {
-  console.log('called from id')
-  const response = await api.get('/api/blogs')
-  expect(response.body[0].id).toBeDefined()
+  test('id is defined', async () => {
+    jest.setTimeout(60000)
+    try {
+      console.log('called from id')
+      const response = await api.get('/api/blogs')
+      expect(response).toBeDefined()
+    } catch (error) {
+      console.log('error from defined')
+    }
+  })
 })

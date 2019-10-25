@@ -1,15 +1,14 @@
 const blogRouter = require('express').Router()
 const Blog = require('../models/blog')
 
-blogRouter.get('/', async (request, response) =>{
-  console.log('called on get')
+blogRouter.get('/', async (request, response) => {
   try {
+    console.log('called on get')
     const blg = await Blog.find({})
-    console.log('blg is found')
+    console.log(blg)
     if (blg) {
-      console.log(`called on blg ${blg}`)
-      
-      response.json(blg)
+      console.log(`called on blg ${blg}`)   
+      response.json(blg.map(bl => bl.toJSON()))
     } else {
       console.log('called from error')
       response.status(404).end()
