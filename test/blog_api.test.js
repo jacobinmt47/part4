@@ -49,4 +49,23 @@ describe('blog api tests', () => {
       console.log('error from defined')
     }
   })
+  test('add blog', async () => {
+    jest.setTimeout(60000)
+    try {
+      console.log('called from add blog')
+      const blog = new Blog({
+        title: 'this is a new blog',
+        author: 'jacob lageschulte',
+        url: 'http://localhost',
+        likes: 0,
+      })
+      await api.post('/api/blogs').send(blog)
+      console.log('called after post -- add blog')
+      const response = await api.get('/api/blogs')
+      expect(response.body.length).toBe(blogHelper.length + 1)
+
+    } catch (error) {
+      console.log(`error from add blog ${error}`)
+    }
+  })
 })
