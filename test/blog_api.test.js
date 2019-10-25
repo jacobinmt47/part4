@@ -65,11 +65,20 @@ describe('blog api tests', () => {
       const urls = response.body.map(b => b.url)
       expect(urls).toContain('http://localhost')
       // might be problem assumes that  new blog will be at end of collection
-      const j1 = response.body[blogHelper.length] 
+      const j1 = response.body[blogHelper.length]
       console.log(j1)
       expect(j1.likes).toBe(0)
+
+      })
+      
     } catch (error) {
       console.log(`error from add blog ${error}`)
     }
   })
+  test('missing title', async () =>{
+    const badBlog = new Blog({
+      author: 'jacob lageschulte',
+      likes: 0,
+  })
+  await api.post('/api/blogs').expect(400)
 })

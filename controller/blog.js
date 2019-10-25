@@ -30,6 +30,14 @@ blogRouter.post('/', async (request, response, next) => {
   if (blog.likes === undefined) {
     blog.likes = 0
   }
+  if (blog.title === undefined || blog.title === '') {
+    console.log('error title is blank')
+    response.status(400).end()
+  }
+  if (blog.url === undefined || blog.url === '') {
+    console.log('error url is blank')
+    response.status(400).end()
+  }
   try {
     const b = await blog.save()
     response.json(b)
