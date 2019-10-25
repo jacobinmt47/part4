@@ -8,7 +8,7 @@ const api = supertest(app)
 
 describe('blog api tests', () => {
   beforeEach(async () => {
-    try { 
+    try {
       jest.setTimeout(30000)
       console.log('before delete many')
       await Blog.deleteMany({})
@@ -19,7 +19,6 @@ describe('blog api tests', () => {
       console.log('after save')
       await Promise.all(promisearray)
       console.log('after promise all')
-    
     } catch (error) {
       console.log('called from error')
     }
