@@ -8,13 +8,21 @@ const api = supertest(app)
 
 describe('blog api tests', () => {
   beforeEach(async () => {
-    console.log('before delete many')
-    await Blog.deleteMany({})
-    console.log('after delete many')
-    const blg = blogHelper.map(blog => new Blog(blog))
-    const promisearray = blg.map(b => b.save())
-    await Promise.all(promisearray)
-    console.log('after promise all')
+    try { 
+      jest.setTimeout(30000)
+      console.log('before delete many')
+      await Blog.deleteMany({})
+      console.log('after delete many')
+      const blg = blogHelper.map(blog => new Blog(blog))
+      console.log('not save blog entries')
+      const promisearray = blg.map(b => b.save())
+      console.log('after save')
+      await Promise.all(promisearray)
+      console.log('after promise all')
+    
+    } catch (error) {
+      console.log('called from error')
+    }
   })
 
   afterAll(() => {
@@ -37,7 +45,7 @@ describe('blog api tests', () => {
     try {
       console.log('called from id')
       const response = await api.get('/api/blogs')
-      expect(response).toBeDefined()
+      expect(response.body.length).toBeDefined()
     } catch (error) {
       console.log('error from defined')
     }
