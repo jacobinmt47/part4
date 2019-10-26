@@ -64,6 +64,9 @@ blogRouter.delete('/:id', async (request, response, next) => {
 blogRouter.put('/:id', async (request, response, next) => {
   console.log('called on put --update value')
   const { body } = request
+  if (body === undefined) {
+    response.status(400).end()
+  }
   const blg = {
     title: body.title,
     author: body.author,
