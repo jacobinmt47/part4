@@ -60,4 +60,22 @@ blogRouter.delete('/:id', async (request, response, next) => {
     next(error)
   }
 })
+
+blogRouter.put('/:id', async (request, response, next) => {
+  console.log('called on put --update value')
+  const { body } = request
+  const blg = {
+    title: body.title,
+    author: body.author,
+    url: body.url,
+    likes: body.likes,
+  }
+  try {
+    const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blg, { new: true })
+    response.json(updatedBlog.toJSON())
+  } catch (error) {
+    console.log(`error on put ${error}`)
+    next(error)
+  }
+})
 module.exports = blogRouter
