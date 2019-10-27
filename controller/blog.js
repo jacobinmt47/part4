@@ -5,7 +5,7 @@ blogRouter.get('/', async (request, response) => {
   try {
     console.log('called on get')
     const blg = await Blog.find({})
-    console.log(blg)
+    // console.log(blg)
     if (blg) {
       console.log(`called on blg ${blg}`)
       response.json(blg.map(bl => bl.toJSON()))
@@ -64,13 +64,12 @@ blogRouter.delete('/:id', async (request, response, next) => {
 blogRouter.put('/:id', async (request, response, next) => {
   console.log('called on put --update value')
   const { body } = request
+  console.log(`body from put ${body.likes}`)
   if (body === undefined) {
     response.status(400).end()
+    return 400
   }
   const blg = {
-    title: body.title,
-    author: body.author,
-    url: body.url,
     likes: body.likes,
   }
   try {
@@ -79,6 +78,19 @@ blogRouter.put('/:id', async (request, response, next) => {
   } catch (error) {
     console.log(`error on put ${error}`)
     next(error)
+  }
+  return 0
+})
+blogRouter.get('/:id', async (request, response, next) => {
+  try {
+    const blog = await Blog.findById(request.params.id)
+    if (blog) {
+      response.json(blog.toJSON())
+    } else {
+      response.status(404).end()
+    }
+  } catch (exception) {
+    next(exception)
   }
 })
 module.exports = blogRouter
