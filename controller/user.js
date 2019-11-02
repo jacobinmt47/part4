@@ -9,7 +9,7 @@ UserRouter.get('/', async (request, response) => {
 
 UserRouter.post('/', async (request, response, next) => {
   const { body } = request
-  if (body.userName.length < 3 && body.password.length < 3) {
+  if (body.userName.length < 3 || body.password.length < 3) {
     response.status(400).end()
     console.log('userName and password length must be equal or greater than 3')
     return (400)
