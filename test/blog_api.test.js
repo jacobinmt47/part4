@@ -115,11 +115,24 @@ describe('blog api tests', () => {
   })
   test('short name', async () => {
     jest.setTimeout(60000)
-    const badUser = new User({
+    const badUser = {
       userName: 'ba',
       name: 'ba',
       password: 'sh',
-    })
+    }
+    try {
+      await api.post('/api/users').send(badUser).expect(400)
+    } catch (exception) {
+      console.log(exception)
+    }
+  })
+  test('duplicate name', async () => {
+    jest.setTimeout(60000)
+    const badUser = { // this user should already be in the user collection
+      userName: 'jacob',
+      name: 'jacob',
+      password: 'password',
+    }
     try {
       await api.post('/api/users').send(badUser).expect(400)
     } catch (exception) {

@@ -10,7 +10,7 @@ UserRouter.get('/', async (request, response) => {
 UserRouter.post('/', async (request, response, next) => {
   const { body } = request
   if (body.userName.length < 3 && body.password.length < 3) {
-    response.status(400)
+    response.status(400).end()
     console.log('userName and password length must be equal or greater than 3')
     return (400)
   }
@@ -18,7 +18,7 @@ UserRouter.post('/', async (request, response, next) => {
   console.log(users.length)
   if (users.length !== 0) {
     console.log('user names must be unique  name found in collection')
-    response.status(400)
+    response.status(400).end()
     return (400)
   }
   try {
