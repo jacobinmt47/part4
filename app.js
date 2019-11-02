@@ -9,9 +9,7 @@ const userRouter = require('./controller/user')
 const middleware = require('./utils/middleware')
 const config = require('./utils/config')
 
-
 console.log('connecting to', config.MONGODB_URI)
-
 mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true })
   .then(() => {
     console.log('connected to MongoDB')

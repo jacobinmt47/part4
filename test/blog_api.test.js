@@ -104,7 +104,7 @@ describe('blog api tests', () => {
       author: 'Edsger W. Dijkstra',
       url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
       likes: 10,
-      user: '1000',
+      user: '5dbde4a131372b2288a73db4',
       __v: 0,
 
     })

@@ -5,7 +5,7 @@ blogRouter.get('/', async (request, response) => {
   try {
     console.log('called on get')
     const blg = await Blog.find({})
-    // console.log(blg)
+    console.log(blg)
     if (blg) {
       console.log(`called on blg ${blg}`)
       response.json(blg.map(bl => bl.toJSON()))
@@ -26,6 +26,7 @@ blogRouter.post('/', async (request, response, next) => {
     author: body.author,
     url: body.url,
     likes: body.likes,
+    user: body.user,
   })
   if (blog.likes === undefined) {
     blog.likes = 0
