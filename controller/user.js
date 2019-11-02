@@ -8,8 +8,20 @@ UserRouter.get('/', async (request, response) => {
 })
 
 UserRouter.post('/', async (request, response, next) => {
+  const { body } = request
+  if (body.userName.length > 2 && body.password > 2) {
+    response.status(400)
+    console.log('userName and password length must be equal or greater than 3')
+    return 400
+  }
+  const users = User.find({ userName: `${body.userName}` })
+  console.log(users.length())
+  if (users.length !== 0) {
+    console.log('user names must be unique  name found in collection')
+    response.status(400)
+    return 400
+  }
   try {
-    const { body } = request
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(body.password, saltRounds)
     const user = User({
@@ -22,5 +34,6 @@ UserRouter.post('/', async (request, response, next) => {
   } catch (exception) {
     next(exception)
   }
+  return (200)
 })
 module.exports = UserRouter
