@@ -1,5 +1,6 @@
 const users = [
   {
+    _id: '1000',
     userName: 'jacob',
     name: 'jacob',
     passwordHash: 'password', // backfill with calulated value
