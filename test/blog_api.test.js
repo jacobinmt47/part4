@@ -113,4 +113,17 @@ describe('blog api tests', () => {
     const { likes } = response.body
     expect(likes).toBe(10)
   })
+  test('short name', async () => {
+    jest.setTimeout(60000)
+    const badUser = new User({
+      userName: 'ba',
+      name: 'ba',
+      password: 'sh',
+    })
+    try {
+      await api.post('/api/users').send(badUser).expect(400)
+    } catch (exception) {
+      console.log(exception)
+    }
+  })
 })
