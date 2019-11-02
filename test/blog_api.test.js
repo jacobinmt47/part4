@@ -2,7 +2,9 @@ const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
 const Blog = require('../models/blog')
+const User = require('../models/user')
 const blogHelper = require('./blog_helper')
+const userHelper = require('./blog_user')
 
 const api = supertest(app)
 
@@ -12,12 +14,16 @@ describe('blog api tests', () => {
       jest.setTimeout(30000)
       // console.log('before delete many')
       await Blog.deleteMany({})
+      await User.deleteMany({})
       // console.log('after delete many')
       const blg = blogHelper.map(blog => new Blog(blog))
+      const usr = userHelper.map(user => new User(user))
       // console.log('not save blog entries')
       const promisearray = blg.map(b => b.save())
+      const pa2 = usr.map(u => u.save())
       // console.log('after save')
       await Promise.all(promisearray)
+      await Promise.all(pa2)
       // console.log('after promise all')
     } catch (error) {
       // console.log('called from error')
@@ -98,6 +104,7 @@ describe('blog api tests', () => {
       author: 'Edsger W. Dijkstra',
       url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
       likes: 10,
+      user: '1000',
       __v: 0,
 
     })
