@@ -4,7 +4,11 @@ const Blog = require('../models/blog')
 blogRouter.get('/', async (request, response) => {
   try {
     console.log('called on get')
-    const blg = await Blog.find({}).populate('user')
+    const blg = await Blog.find({}).populate(
+      'user', {
+        userName: 1, id: 1, name: 1,
+      },
+    )
     console.log(blg)
     if (blg) {
       console.log(`called on blg ${blg}`)
