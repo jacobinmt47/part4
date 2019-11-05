@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Content-Type: application/json; charset=utf-8
+Content-Length: 219
+ETag: W/"db-DLqVZ7Wcc79woSMtKGRY49hF0AI"
+Date: Tue, 05 Nov 2019 21:35:18 GMT
+Connection: close
+
+{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImphY29iIiwiaWQiOiI1ZGJkZTRhMTMxMzcyYjIyODhhNzNkYjQiLCJpYXQiOjE1NzI5ODk3MTh9.8-0p4u3dUyT5k-P_ReC3gLRpSP3YQhMRHrUvC_ISFI4","username":"jacob","name":"jacob"}
