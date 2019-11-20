@@ -33,6 +33,7 @@ blogRouter.get('/', async (request, response) => {
 
 blogRouter.post('/', async (request, response, next) => {
   console.log('called on post')
+  //console.log(request)
   const token = getToken(request)
   try {
     const decodedToken = jwt.verify(token, process.env.SECRET)
